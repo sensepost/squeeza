@@ -340,8 +340,8 @@ querystring - either POST or GET parameters for the vulnerable page.
               mark the injection point with X_X_X_X_X_X
               e.g.
 
-                querystring=\_\_VIEWSTATE=dDwtMTcxMDQzNTQyMDs7PtQR3aDGafqEYIzRv
-                SwVTqrcmzY0&m_search=X\_X\_X\_X\_X\_X&\_ctl3=Search
+                querystring=__VIEWSTATE=dDwtMTcxMDQzNTQyMDs7PtQR3aDGafqEYIzRv
+                SwVTqrcmzY0&m_search=X_X_X_X_X_X&_ctl3=Search
 
 request\_timeout (20) - user by various channels as a generic timeout
 
