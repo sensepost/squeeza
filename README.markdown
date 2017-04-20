@@ -1,13 +1,16 @@
-#1. Name
+# 1. Name
 Squeeza - SQL Injection without the pain of syringes
-#2. Authors
+
+# 2. Authors
 Marco Slaviero < marco(at)sensepost(dot)com >  
 Haroon Meer
-#3. License, version & release date
+
+# 3. License, version & release date
 License : GPLv2  
 Version : v0.22  
 Release Date : 2008/08/24
-#4. Description
+
+# 4. Description
 squeeza is a tool helps exploits SQL injection vulnerabilities in broken
 web applications. Its functionality is split into creating data on the
 database (by executing commands, copying in files, issuing new SQL queries)
@@ -19,8 +22,9 @@ Currently, it supports the following databases:
  - MySQL (only when multi-queries are enable, which is not too common)  
 squeeza is not a tool for finding injection points. That recipe
 generally starts with 1 x analyst.
-#5. Usage
-##5.1 Installation
+
+# 5. Usage
+## 5.1 Installation
 Installation is easy. Untar the archive into an appropriate spot.
 >  $tar xvzf squeeza-0.21.tar.gz
 
@@ -38,7 +42,8 @@ items:
  - sql\_postfix  
  - dns\_domain  
 The default mode is command mode, and the default channel is dns.
-##5.2 Data Flow Model
+
+## 5.2 Data Flow Model
 As already mentioned, squeeza splits the creation of data at the server
 away from the extraction of that data off the server (within certain
 constraints). Data is created by a /mode/, and extracted via a /channel/.
@@ -63,7 +68,7 @@ following matrix shows the level of support for each mode and channel
 combination.
 
 	                            Channel
-	             .-------------------------------------.	
+	             .-------------------------------------.
 	             |    DNS    |  Timing   | HTTP Errors |
 	  .----------+-----------+-----------+-------------|
 	M | Command || Supported | Supported | Supported   |
@@ -71,12 +76,12 @@ combination.
 	d | SQL     || Supported | Supported | Unsupported |
 	e |         ||           |           |             |
 	  `------------------------------------------------`
-	
+
 Obviously, you'll also be limited by the capabilities of the database
 connection. If xp_cmdshell is removed or otherwise unavailable, squeeza
 isn't going to magically make it reappear.
 
-##5.3 Command Set
+## 5.3 Command Set
 The following commands are hooked into the basic squeeza shell. (Each
 module will probably further expose its own commands.) squeeza commands are
 always prefixed by a '!'.  
@@ -92,7 +97,7 @@ always prefixed by a '!'.
  !copy - switch to copy mode  
  !sql - switch to sql mode  
 
-##5.4 Example Usage
+## 5.4 Example Usage
 Starting squeeza:
 
 > $./squeeza.rb
@@ -100,13 +105,13 @@ Starting squeeza:
 
 > Squeeza tha cheeza v0.21
 > (c) {marco|haroon}@sensepost.com 2007
- 
-> sp-sq> 
+
+> sp-sq>
 
 
 This presents you with a basic shell from which to control squeeza. All
 squeeza commands are prefixed by a '!'. Anything else is sent through to
-the underlying module; this generally causes action to occur. E.g. The 
+the underlying module; this generally causes action to occur. E.g. The
 default mode is command mode. When typing in  
 
 > sp-sq> dir c:\
@@ -126,7 +131,7 @@ To then extract a list of database tables via timing, one could use
 > sp-sq> !sql
 > sp-sq> !ret tables
 
-##5.5 Using command mode
+## 5.5 Using command mode
 Switch to command mode at any time by using the '!cmd' command.  
 
 This mode enables the execution of commands on the server. Type in the
@@ -140,7 +145,7 @@ Fax Viewer /on the server/, and sit waiting for the viewer to quit. Which it won
 Command mode uses the following variables:  
  - cmd\_table_name : name to use for temporary table in database, default is 'sqcmd'  
 
-##5.6 Using copy mode
+## 5.6 Using copy mode
 Switch to copy mode at any time by using the '!copy' command.  
 
 This mode enables the copying of files /from/ the server to your local
@@ -151,13 +156,13 @@ machine. Format of copy command is:
 where 'src-file' is a full path to the file you want to copy, and the
 optional 'dst-file' is a local filename.
 
-##5.7 Using sql mode
+## 5.7 Using sql mode
 Switch to sql mode at any time by using the '!sql' command.  
 
-This mode enables the execution of fairly simple but arbitrary SQL queries 
-on the database. It has built-in queries to help with the mapping of 
-database schema, but one can easily construct one's own queries. This mode 
-does not actually build an intermediate or temporary table before data 
+This mode enables the execution of fairly simple but arbitrary SQL queries
+on the database. It has built-in queries to help with the mapping of
+database schema, but one can easily construct one's own queries. This mode
+does not actually build an intermediate or temporary table before data
 extraction, as an added optimisation.  
 
 The built-in queries are operated using the '!ret' command. Possible values for '!ret' include:  
@@ -180,7 +185,7 @@ For instance, to extract user tables one could use the following query
 
 > sp-sq> name sysobjects xtype='U'
 
-##5.8 Using the DNS channel
+## 5.8 Using the DNS channel
 Switch to the dns channel at any time by using the '!channel dns' command.  
 
 This channel is useful when no HTTP error messages are present, and you
@@ -201,7 +206,7 @@ Other configuration variables that affect the DNS channel (see Appendix A for a 
 - dns_domain  
 - dns_server  
 
-##5.9 Using the timing channel
+## 5.9 Using the timing channel
 Switch to timing channel at any time by using the '!channel time' command.  
 
 This channel enables the extraction of data when very few database or
@@ -223,7 +228,7 @@ description:
 - ansi  
 - request_timeout  
 
-##5.10 Using the HTTP error channel
+## 5.10 Using the HTTP error channel
 Switch to the HTTP error channel at any time by using the '!channel http' command.  
 
 This channel requires that SQL errors are shown in the body of the HTML.
@@ -234,7 +239,7 @@ Configuration variables for the HTTP error channel (see Appendix A for a longer
 description:  
 - request_timeout  
 
-#6. Requirements
+# 6. Requirements
 Before installing squeeza, ensure that the following system requirements
 are fulfilled:  
 
@@ -246,26 +251,27 @@ are fulfilled:
 - access to a dns server, if you'll be using the dns channel  
 - a large SQL injection point in a vulnerable web application. how large?
 	 typical injection strings are 600 or so bytes.  
-#7. Additional Resources 
-##7.1 Bugs
+
+# 7. Additional Resources
+## 7.1 Bugs
 Apart from sql mode not working with the http error channel, we aren't
 aware of major bugs in squeeza. Feel free to send your bug reports to
 research@sensepost.com, along with a description of what when wrong, what
 you were doing at the time, squeeza output and so on. Setting '!debug 2'
 will give you much more output.
 
-##7.2 Appendix A: Known configuration variables
-Default value is given in rounded braces after the variable name. If a 
-variable takes on a one of a pre-defined set of values, they are specified 
+## 7.2 Appendix A: Known configuration variables
+Default value is given in rounded braces after the variable name. If a
+variable takes on a one of a pre-defined set of values, they are specified
 after the variable name like so:  
 
 > random_var (default) [ value1 | value 2 | value 3 ]
 
 All clear? Good. Let's carry one.  
 
-ansi (off) [ on | off ] - Specifies whether your terminal capable of 
+ansi (off) [ on | off ] - Specifies whether your terminal capable of
      handling ansi characters. Set to 'no' for Windows use.  
-		 
+
 cmd_table_name (sqcmd) - Name of temporary table to use in command mode  
 
 cp_table_name (sqfilecp) - Name of temporary table to use in copy mode  
@@ -274,7 +280,7 @@ cp_table_name (sqfilecp) - Name of temporary table to use in copy mode
 
 delay (1) - Integer specifying how long to wait for a 1-bit when using the
       timing channel. Normally this is automatically calculated by !calib  
-			
+
 dns_domain - Domain that is appended to data when initiating DNS requests. You should have access to traffic between the database server
              and the DNS server for the dns\_domain (either because you're
              running squeeza on the DNS server or because you're on the
@@ -298,7 +304,7 @@ headers[] - Additional HTTP headers to add to the request. Use this to add
 
                headers[]=Cookie: qweqwewqeqweqweqwe
                headers[]=User-Agent: My squeeza
-						
+
 host - Used by the http module to send requests to a vulnerable web
        application.
 
@@ -314,13 +320,13 @@ lines\_per\_request (1) - Used by the DNS module to request multiple lines per
 
 method (post) [ post | get ] - http method to use
 
-mssql\_channel (dns) [ dns | time | http ] - Decide at start-up which channel 
+mssql\_channel (dns) [ dns | time | http ] - Decide at start-up which channel
               to use.
 
 mssql\_mode (cmd) [ cmd | copy | sql ] - Decide at start-up which mode to
            enter.
 
-one\_range - used by the time channel to determine if a request's time is 
+one\_range - used by the time channel to determine if a request's time is
             to be treated as a 1-bit.
 
 outlier\_weight - used by the time channel to discard outliers when
@@ -334,8 +340,8 @@ querystring - either POST or GET parameters for the vulnerable page.
               mark the injection point with X_X_X_X_X_X
               e.g.
 
-                querystring=__VIEWSTATE=dDwtMTcxMDQzNTQyMDs7PtQR3aDGafqEYIzRv
-                SwVTqrcmzY0&m_search=X_X_X_X_X_X&_ctl3=Search
+                querystring=\_\_VIEWSTATE=dDwtMTcxMDQzNTQyMDs7PtQR3aDGafqEYIzRv
+                SwVTqrcmzY0&m_search=X\_X\_X\_X\_X\_X&\_ctl3=Search
 
 request\_timeout (20) - user by various channels as a generic timeout
 
@@ -345,7 +351,7 @@ sql\_postfix - string that will complete the injection string. typically
 sql\_prefix  - string that ends the sql statement immediately prior to
               squeeza's injection string. typically this might look like
 							"';" (excluding the "")
-						
+
 ssl (off) [ on | off ] - determine whether ssl is needed
 
 time_privs (high) [ high | low ] - this value is automatically selected for
@@ -353,6 +359,5 @@ time_privs (high) [ high | low ] - this value is automatically selected for
 
 url - a path to the vulnerable page
 
-zero\_range - used by the time channel to determine if a request's time is 
+zero\_range - used by the time channel to determine if a request's time is
              to be treated as a 0-bit.
-
